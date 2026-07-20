@@ -1,21 +1,32 @@
 "use client";
 
-import { useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/app/_lib/supabase-auth";
 
 export default function LoginForm() {
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const notAdmin = searchParams.get("error") === "not_admin";
 
+  const [notAdmin, setNotAdmin] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Read the URL param ONCE, on mount, then immediately strip it from
+  // the URL so it doesn't linger and re-apply on future attempts.
+  useEffect(() => {
+    if (searchParams.get("error") === "not_admin") {
+      setNotAdmin(true);
+      router.replace("/admin/login");
+    }
+  }, [searchParams, router]);
+
   async function handleSubmit(e) {
     e.preventDefault();
     setError(null);
+    setNotAdmin(false); // clear any leftover banner the moment a new attempt starts
     setIsSubmitting(true);
 
     const supabase = createClient();
