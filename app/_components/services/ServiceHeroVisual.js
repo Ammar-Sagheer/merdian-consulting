@@ -1,4 +1,4 @@
-import ServiceIcon from "./ServiceIcon";
+import ServiceIllustration from "./ServiceIllustration";
 
 const GRADIENTS = {
   "web-app-dev": "from-indigo-500 via-primary-600 to-indigo-800",
@@ -25,9 +25,9 @@ export default function ServiceHeroVisual({ service, size = "card" }) {
         }}
         aria-hidden="true"
       />
-      <ServiceIcon
-        name={service.icon}
-        className={`relative text-white/90 ${isHero ? "h-16 w-16" : "h-10 w-10"}`}
+      <ServiceIllustration
+        serviceId={service.id}
+        className={`relative ${isHero ? "h-full max-h-64 w-full max-w-xl" : "h-full w-full"}`}
       />
     </div>
   );
