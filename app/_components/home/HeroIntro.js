@@ -82,15 +82,17 @@ export default function HeroIntro({ tagline, blurb }) {
           data-hero-visual
           className="relative order-2 aspect-[3/2] w-full overflow-hidden rounded-2xl shadow-sm lg:order-none lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:max-w-lg"
         >
-          <Image
-            src="/hero.png"
-            alt="Illustration of a technology dashboard and development tools"
-            fill
-            sizes="(min-width: 1024px) 50vw, 100vw"
-            priority
-            className="object-cover"
-          />
-          <div className="absolute inset-x-0 bottom-0 flex items-center justify-center gap-2 bg-gradient-to-t from-neutral-900/70 via-neutral-900/15 to-transparent p-3 pt-8 lg:hidden">
+          <div className="absolute inset-0 origin-center scale-[1.15] -translate-x-[7%] lg:scale-100 lg:translate-x-0">
+            <Image
+              src="/hero.png"
+              alt="Illustration of a technology dashboard and development tools"
+              fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              priority
+              className="object-cover"
+            />
+          </div>
+          <div className="absolute inset-0 flex flex-wrap items-center justify-center gap-2 bg-neutral-900/30 p-4 lg:hidden">
             <HeroCtas variant="overlay" />
           </div>
         </div>
