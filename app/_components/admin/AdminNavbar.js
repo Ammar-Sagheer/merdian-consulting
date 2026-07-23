@@ -49,7 +49,7 @@ export default function AdminNavbar() {
             type="button"
             onClick={handleLogout}
             disabled={isLoggingOut}
-            className="rounded-md border border-neutral-300 px-3 py-1.5 text-sm font-medium text-neutral-700 transition hover:border-neutral-400 hover:bg-neutral-50 disabled:cursor-not-allowed disabled:opacity-50"
+            className="cursor-pointer rounded-md border border-neutral-300 px-3 py-1.5 text-sm font-medium text-neutral-700 transition hover:border-neutral-400 hover:bg-neutral-50 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isLoggingOut ? "Logging out…" : "Log Out"}
           </button>

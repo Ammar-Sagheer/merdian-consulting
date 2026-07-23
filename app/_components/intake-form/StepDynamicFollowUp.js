@@ -28,7 +28,7 @@ export default function StepDynamicFollowUp() {
         <button
           type="button"
           onClick={prevStep}
-          className="mt-4 rounded-md border border-neutral-300 px-6 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50"
+          className="mt-4 cursor-pointer rounded-md border border-neutral-300 px-6 py-2 text-sm font-medium text-neutral-700 transition hover:bg-neutral-50"
         >
           Back
         </button>
@@ -62,7 +62,7 @@ export default function StepDynamicFollowUp() {
                     role="radio"
                     aria-checked={isSelected}
                     onClick={() => updateFollowUpAnswer(question.id, option)}
-                    className={`rounded-md border px-4 py-2 text-sm transition ${
+                    className={`cursor-pointer rounded-md border px-4 py-2 text-sm transition ${
                       isSelected
                         ? "border-primary-600 bg-primary-50 text-primary-700"
                         : "border-neutral-300 bg-white text-neutral-700 hover:border-neutral-400"
@@ -99,7 +99,7 @@ export default function StepDynamicFollowUp() {
           type="button"
           onClick={handleContinue}
           disabled={!allAnswered}
-          className="rounded-md bg-primary-600 px-6 py-2 text-sm font-medium text-white hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50"
+          className="cursor-pointer rounded-md bg-primary-600 px-6 py-2 text-sm font-medium text-white transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50"
         >
           Continue
         </button>

@@ -1,7 +1,7 @@
 import { createClient } from "@/app/_lib/supabase-server";
 import { supabase } from "@/app/_lib/supabase";
 
-const LEADS_PAGE_SIZE = 10;
+const LEADS_PAGE_SIZE = 12;
 
 export async function getLeads({
   sortBy = "created_at",
