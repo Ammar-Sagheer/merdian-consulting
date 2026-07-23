@@ -73,7 +73,10 @@ export default function HeroIntro({ tagline, blurb }) {
             </a>
           </div>
         </div>
-        <div data-hero-visual className="relative mx-auto aspect-[3/2] w-full max-w-lg overflow-hidden rounded-2xl lg:mx-0">
+        <div
+          data-hero-visual
+          className="relative mx-auto aspect-[3/2] w-full max-w-xs sm:max-w-sm lg:max-w-lg overflow-hidden rounded-2xl shadow-sm lg:mx-0"
+        >
           <Image
             src="/hero.png"
             alt="Illustration of a technology dashboard and development tools"
