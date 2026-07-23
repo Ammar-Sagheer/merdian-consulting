@@ -35,7 +35,7 @@ export default async function AdminDashboardPage({ searchParams }) {
   }
 
   return (
-    <AdminFadeIn>
+    <AdminFadeIn key={`${statusFilter}-${sortDir}-${search}-${page}`}>
       <div
         className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
         data-admin-fade
@@ -199,24 +199,24 @@ export default async function AdminDashboardPage({ searchParams }) {
             <Link
               href={buildHref({ pageNum: Math.max(1, page - 1) })}
               aria-disabled={page <= 1}
-              className={`rounded-md border border-neutral-300 px-3 py-1 ${
+              className={`inline-flex items-center gap-1 rounded-md border px-3 py-1.5 font-medium transition ${
                 page <= 1
-                  ? "pointer-events-none opacity-50"
-                  : "hover:bg-neutral-50"
+                  ? "pointer-events-none border-neutral-200 text-neutral-300"
+                  : "border-neutral-300 text-neutral-700 hover:border-neutral-400 hover:bg-neutral-50"
               }`}
             >
-              Previous
+              <span aria-hidden="true">←</span> Previous
             </Link>
             <Link
               href={buildHref({ pageNum: Math.min(totalPages, page + 1) })}
               aria-disabled={page >= totalPages}
-              className={`rounded-md border border-neutral-300 px-3 py-1 ${
+              className={`inline-flex items-center gap-1 rounded-md border px-3 py-1.5 font-medium transition ${
                 page >= totalPages
-                  ? "pointer-events-none opacity-50"
-                  : "hover:bg-neutral-50"
+                  ? "pointer-events-none border-neutral-200 text-neutral-300"
+                  : "border-neutral-300 text-neutral-700 hover:border-neutral-400 hover:bg-neutral-50"
               }`}
             >
-              Next
+              Next <span aria-hidden="true">→</span>
             </Link>
           </div>
         </div>

@@ -20,9 +20,9 @@ export default async function LeadDetailPage({ params }) {
       <div data-admin-fade className="mb-6">
         <Link
           href="/admin"
-          className="text-sm font-medium text-neutral-500 hover:text-primary-600"
+          className="inline-flex items-center gap-1 rounded-md border border-neutral-300 px-3 py-1.5 text-sm font-medium text-neutral-700 transition hover:border-neutral-400 hover:bg-neutral-50"
         >
-          ← Back to leads
+          <span aria-hidden="true">←</span> Back to leads
         </Link>
       </div>
 

@@ -1,11 +1,13 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import { gsap } from "gsap";
+import { createClient } from "@/app/_lib/supabase-auth";
 
 export default function AdminNavbar() {
   const navRef = useRef(null);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -19,6 +21,13 @@ export default function AdminNavbar() {
     return () => ctx.revert();
   }, []);
 
+  async function handleLogout() {
+    setIsLoggingOut(true);
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    window.location.href = "/admin/login";
+  }
+
   return (
     <nav
       ref={navRef}
@@ -29,12 +38,22 @@ export default function AdminNavbar() {
         <span className="text-lg font-semibold text-neutral-900">
           Meridian Admin
         </span>
-        <Link
-          href="/admin/settings"
-          className="text-sm font-medium text-neutral-600 hover:text-primary-600"
-        >
-          Settings
-        </Link>
+        <div className="flex items-center gap-4">
+          <Link
+            href="/admin/settings"
+            className="text-sm font-medium text-neutral-600 hover:text-primary-600"
+          >
+            Settings
+          </Link>
+          <button
+            type="button"
+            onClick={handleLogout}
+            disabled={isLoggingOut}
+            className="rounded-md border border-neutral-300 px-3 py-1.5 text-sm font-medium text-neutral-700 transition hover:border-neutral-400 hover:bg-neutral-50 disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {isLoggingOut ? "Logging out…" : "Log Out"}
+          </button>
+        </div>
       </div>
     </nav>
   );
