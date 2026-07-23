@@ -9,14 +9,14 @@ export default function AdminFadeIn({ children, className }) {
   useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
-      tl.from("[data-admin-fade]", {
-        opacity: 0,
-        y: 16,
-        duration: 0.5,
-        stagger: 0.08,
-      }).from(
+      tl.fromTo(
+        "[data-admin-fade]",
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: 0.5, stagger: 0.08 },
+      ).fromTo(
         "tbody tr",
-        { opacity: 0, y: 10, duration: 0.4, stagger: 0.04 },
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 0.4, stagger: 0.04 },
         "-=0.2",
       );
     }, rootRef);
@@ -25,7 +25,7 @@ export default function AdminFadeIn({ children, className }) {
   }, []);
 
   return (
-    <div ref={rootRef} className={className}>
+    <div ref={rootRef} className={`admin-fade-scope ${className || ""}`.trim()}>
       {children}
     </div>
   );

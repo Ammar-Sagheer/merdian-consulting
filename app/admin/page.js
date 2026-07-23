@@ -1,4 +1,4 @@
-import { getLeads } from "@/app/_lib/data-service";
+import { getLeads, getLeadStatusCounts } from "@/app/_lib/data-service";
 import LeadStatusUpdater from "@/app/_components/admin/LeadStatusUpdater";
 import AdminFadeIn from "@/app/_components/admin/AdminFadeIn";
 import Link from "next/link";
@@ -9,8 +9,30 @@ export default async function AdminDashboardPage({ searchParams }) {
   const params = await searchParams;
   const statusFilter = params?.status || "all";
   const sortDir = params?.sort === "asc" ? "asc" : "desc";
+  const search = params?.search || "";
+  const page = Math.max(1, Number(params?.page) || 1);
 
-  const leads = await getLeads({ statusFilter, sortDir });
+  const [{ leads, totalCount, pageSize }, statusCounts] = await Promise.all([
+    getLeads({ statusFilter, sortDir, search, page }),
+    getLeadStatusCounts(),
+  ]);
+
+  const totalPages = Math.max(1, Math.ceil(totalCount / pageSize));
+
+  function buildHref({
+    status = statusFilter,
+    sort = sortDir,
+    searchTerm = search,
+    pageNum = page,
+  } = {}) {
+    const query = new URLSearchParams();
+    if (status !== "all") query.set("status", status);
+    if (sort !== "desc") query.set("sort", sort);
+    if (searchTerm) query.set("search", searchTerm);
+    if (pageNum !== 1) query.set("page", String(pageNum));
+    const qs = query.toString();
+    return `/admin${qs ? `?${qs}` : ""}`;
+  }
 
   return (
     <AdminFadeIn>
@@ -24,18 +46,62 @@ export default async function AdminDashboardPage({ searchParams }) {
           {STATUS_FILTERS.map((status) => (
             <Link
               key={status}
-              href={`/admin?status=${status}`}
+              href={buildHref({ status, pageNum: 1 })}
               className={`rounded-md px-3 py-1 text-xs font-medium ${
                 statusFilter === status
                   ? "bg-primary-600 text-white"
                   : "border border-neutral-300 text-neutral-600 hover:bg-neutral-50"
               }`}
             >
-              {status === "all" ? "All" : status}
+              {status === "all" ? "All" : status}{" "}
+              <span
+                className={
+                  statusFilter === status
+                    ? "text-primary-100"
+                    : "text-neutral-400"
+                }
+              >
+                {statusCounts[status]}
+              </span>
             </Link>
           ))}
         </div>
       </div>
+
+      <form
+        method="GET"
+        action="/admin"
+        className="mb-4 flex gap-2"
+        data-admin-fade
+      >
+        {statusFilter !== "all" && (
+          <input type="hidden" name="status" value={statusFilter} />
+        )}
+        {sortDir !== "desc" && (
+          <input type="hidden" name="sort" value={sortDir} />
+        )}
+        <input
+          type="search"
+          name="search"
+          defaultValue={search}
+          placeholder="Search by name or email…"
+          className="w-full max-w-sm rounded-md border border-neutral-300 px-3 py-2 text-sm focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
+        />
+        <button
+          type="submit"
+          className="rounded-md border border-neutral-300 px-4 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50"
+        >
+          Search
+        </button>
+        {search && (
+          <Link
+            href={buildHref({ searchTerm: "", pageNum: 1 })}
+            className="rounded-md px-4 py-2 text-sm font-medium text-neutral-500 hover:text-neutral-700"
+          >
+            Clear
+          </Link>
+        )}
+      </form>
 
       {leads.length === 0 ? (
         <p className="text-neutral-600" data-admin-fade>
@@ -72,7 +138,7 @@ export default async function AdminDashboardPage({ searchParams }) {
                   className="px-4 py-3 font-medium text-neutral-700"
                 >
                   <Link
-                    href={`/admin?status=${statusFilter}&sort=${sortDir === "asc" ? "desc" : "asc"}`}
+                    href={buildHref({ sort: sortDir === "asc" ? "desc" : "asc" })}
                     aria-label={`Sort by date submitted, currently ${sortDir === "asc" ? "oldest first" : "newest first"}`}
                   >
                     Submitted {sortDir === "asc" ? "↑" : "↓"}
@@ -90,10 +156,15 @@ export default async function AdminDashboardPage({ searchParams }) {
               {leads.map((lead) => (
                 <tr
                   key={lead.id}
-                  className="border-b border-neutral-100 last:border-0"
+                  className="border-b border-neutral-100 last:border-0 hover:bg-neutral-50"
                 >
                   <td className="px-4 py-3 text-neutral-900">
-                    {lead.full_name}
+                    <Link
+                      href={`/admin/leads/${lead.id}`}
+                      className="font-medium text-primary-600 hover:underline"
+                    >
+                      {lead.full_name}
+                    </Link>
                   </td>
                   <td className="px-4 py-3 text-neutral-600">{lead.email}</td>
                   <td className="px-4 py-3 text-neutral-600">
@@ -112,6 +183,42 @@ export default async function AdminDashboardPage({ searchParams }) {
               ))}
             </tbody>
           </table>
+        </div>
+      )}
+
+      {totalPages > 1 && (
+        <div
+          className="mt-4 flex items-center justify-between text-sm text-neutral-600"
+          data-admin-fade
+        >
+          <span>
+            Page {page} of {totalPages} &middot; {totalCount} lead
+            {totalCount === 1 ? "" : "s"}
+          </span>
+          <div className="flex gap-2">
+            <Link
+              href={buildHref({ pageNum: Math.max(1, page - 1) })}
+              aria-disabled={page <= 1}
+              className={`rounded-md border border-neutral-300 px-3 py-1 ${
+                page <= 1
+                  ? "pointer-events-none opacity-50"
+                  : "hover:bg-neutral-50"
+              }`}
+            >
+              Previous
+            </Link>
+            <Link
+              href={buildHref({ pageNum: Math.min(totalPages, page + 1) })}
+              aria-disabled={page >= totalPages}
+              className={`rounded-md border border-neutral-300 px-3 py-1 ${
+                page >= totalPages
+                  ? "pointer-events-none opacity-50"
+                  : "hover:bg-neutral-50"
+              }`}
+            >
+              Next
+            </Link>
+          </div>
         </div>
       )}
     </AdminFadeIn>

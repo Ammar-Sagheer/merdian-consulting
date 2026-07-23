@@ -15,3 +15,15 @@
   --color-neutral-700: #334155;
   --color-neutral-900: #0f172a;
 }
+
+/*
+ * Admin entrance animations are driven by GSAP in a useEffect, which only
+ * runs after the browser has already painted these elements at full
+ * opacity. Pre-hiding them here (before any JS runs) avoids a flash of
+ * fully-visible content snapping to invisible right before it fades in.
+ */
+.admin-fade-scope [data-admin-fade],
+.admin-fade-scope tbody tr,
+[data-admin-animate] {
+  opacity: 0;
+}

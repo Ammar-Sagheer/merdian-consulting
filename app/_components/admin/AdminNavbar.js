@@ -9,12 +9,11 @@ export default function AdminNavbar() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(navRef.current, {
-        opacity: 0,
-        y: -16,
-        duration: 0.4,
-        ease: "power2.out",
-      });
+      gsap.fromTo(
+        navRef.current,
+        { opacity: 0, y: -16 },
+        { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" },
+      );
     });
 
     return () => ctx.revert();
@@ -23,6 +22,7 @@ export default function AdminNavbar() {
   return (
     <nav
       ref={navRef}
+      data-admin-animate
       className="border-b border-neutral-200 bg-white px-4 py-4"
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between">
