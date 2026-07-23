@@ -14,7 +14,7 @@ function HeroCtas({ variant = "default" }) {
         href="/intake"
         className={
           isOverlay
-            ? "inline-block rounded-md bg-primary-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-primary-700"
+            ? "inline-flex shrink-0 items-center justify-center rounded-full bg-primary-600 px-4 py-2 text-xs font-medium text-white shadow-sm transition hover:-translate-y-0.5 hover:bg-primary-700"
             : "inline-block rounded-md bg-primary-600 px-6 py-3 text-sm font-medium text-white transition hover:-translate-y-0.5 hover:bg-primary-700"
         }
       >
@@ -24,7 +24,7 @@ function HeroCtas({ variant = "default" }) {
         href="#services"
         className={
           isOverlay
-            ? "inline-block rounded-md border border-white/70 bg-white/10 px-5 py-2.5 text-sm font-medium text-white backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-white/20"
+            ? "inline-flex shrink-0 items-center justify-center rounded-full border border-white/70 bg-white/10 px-4 py-2 text-xs font-medium text-white backdrop-blur-sm transition hover:-translate-y-0.5 hover:bg-white/20"
             : "inline-block rounded-md border border-neutral-300 px-6 py-3 text-sm font-medium text-neutral-700 transition hover:-translate-y-0.5 hover:border-neutral-400"
         }
       >
@@ -80,7 +80,7 @@ export default function HeroIntro({ tagline, blurb }) {
 
         <div
           data-hero-visual
-          className="relative order-2 mx-auto aspect-[3/2] w-full max-w-xs overflow-hidden rounded-2xl shadow-sm sm:max-w-sm lg:order-none lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:mx-0 lg:max-w-lg"
+          className="relative order-2 aspect-[3/2] w-full overflow-hidden rounded-2xl shadow-sm lg:order-none lg:col-start-2 lg:row-span-3 lg:row-start-1 lg:max-w-lg"
         >
           <Image
             src="/hero.png"
@@ -90,7 +90,7 @@ export default function HeroIntro({ tagline, blurb }) {
             priority
             className="object-cover"
           />
-          <div className="absolute inset-x-0 bottom-0 flex flex-col gap-2 bg-gradient-to-t from-neutral-900/70 via-neutral-900/10 to-transparent p-4 pt-10 sm:flex-row lg:hidden">
+          <div className="absolute inset-x-0 bottom-0 flex items-center justify-center gap-2 bg-gradient-to-t from-neutral-900/70 via-neutral-900/15 to-transparent p-3 pt-8 lg:hidden">
             <HeroCtas variant="overlay" />
           </div>
         </div>
