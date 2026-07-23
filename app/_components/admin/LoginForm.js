@@ -18,12 +18,11 @@ export default function LoginForm() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(formRef.current, {
-        opacity: 0,
-        y: 20,
-        duration: 0.5,
-        ease: "power2.out",
-      });
+      gsap.fromTo(
+        formRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
+      );
     });
 
     return () => ctx.revert();
@@ -62,7 +61,12 @@ export default function LoginForm() {
   }
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
+    <form
+      ref={formRef}
+      data-admin-animate
+      onSubmit={handleSubmit}
+      className="space-y-4"
+    >
       {notAdmin && (
         <p
           className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-600"
@@ -115,7 +119,7 @@ export default function LoginForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50"
+        className="w-full cursor-pointer rounded-md bg-primary-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50"
       >
         {isSubmitting ? "Logging in..." : "Log In"}
       </button>

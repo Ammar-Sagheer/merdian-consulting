@@ -93,7 +93,7 @@ export default function StepProblemDescription() {
         <button
           type="button"
           onClick={prevStep}
-          className="rounded-md border border-neutral-300 px-6 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50"
+          className="cursor-pointer rounded-md border border-neutral-300 px-6 py-2 text-sm font-medium text-neutral-700 transition hover:bg-neutral-50"
         >
           Back
         </button>
@@ -101,7 +101,7 @@ export default function StepProblemDescription() {
           type="button"
           onClick={handleContinue}
           disabled={!isValid}
-          className="rounded-md bg-primary-600 px-6 py-2 text-sm font-medium text-white hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50"
+          className="cursor-pointer rounded-md bg-primary-600 px-6 py-2 text-sm font-medium text-white transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50"
         >
           Continue
         </button>

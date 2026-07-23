@@ -43,7 +43,7 @@ export default function Navbar() {
           onClick={() => setIsOpen((open) => !open)}
           aria-expanded={isOpen}
           aria-label={isOpen ? "Close menu" : "Open menu"}
-          className="flex h-10 w-10 items-center justify-center rounded-md text-neutral-700 hover:bg-neutral-100 sm:hidden"
+          className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-md text-neutral-700 transition hover:bg-neutral-100 sm:hidden"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

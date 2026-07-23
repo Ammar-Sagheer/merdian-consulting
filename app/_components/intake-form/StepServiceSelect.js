@@ -36,7 +36,7 @@ export default function StepServiceSelect() {
               role="radio"
               aria-checked={isSelected}
               onClick={() => handleSelect(service.id)}
-              className={`rounded-lg border p-4 text-left transition ${
+              className={`cursor-pointer rounded-lg border p-4 text-left transition ${
                 isSelected
                   ? "border-primary-600 bg-primary-50"
                   : "border-neutral-200 bg-white hover:border-neutral-300"
@@ -55,7 +55,7 @@ export default function StepServiceSelect() {
         <button
           type="button"
           onClick={prevStep}
-          className="rounded-md border border-neutral-300 px-6 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50"
+          className="cursor-pointer rounded-md border border-neutral-300 px-6 py-2 text-sm font-medium text-neutral-700 transition hover:bg-neutral-50"
         >
           Back
         </button>
@@ -63,7 +63,7 @@ export default function StepServiceSelect() {
           type="button"
           onClick={handleContinue}
           disabled={!formData.serviceId}
-          className="rounded-md bg-primary-600 px-6 py-2 text-sm font-medium text-white hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50"
+          className="cursor-pointer rounded-md bg-primary-600 px-6 py-2 text-sm font-medium text-white transition hover:bg-primary-700 disabled:cursor-not-allowed disabled:opacity-50"
         >
           Continue
         </button>
